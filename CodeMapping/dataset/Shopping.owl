@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#"
+     xml:base="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:shop="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#">
+    <owl:Ontology rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl">
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Created with TopBraid Composer</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Blouses -->
+
+    <owl:Class rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Blouses">
+        <rdfs:subClassOf rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#WomensWear"/>
+        <rdfs:comment>aaaa</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Henleys -->
+
+    <owl:Class rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Henleys">
+        <rdfs:subClassOf rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Shirts"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#MensWear -->
+
+    <owl:Class rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#MensWear">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>hello</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Oxfords -->
+
+    <owl:Class rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Oxfords">
+        <rdfs:subClassOf rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Shirts"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Shirts -->
+
+    <owl:Class rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Shirts">
+        <rdfs:subClassOf rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#MensWear"/>
+        <rdfs:comment>abc</rdfs:comment>
+        <rdfs:comment>testing</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Tshirts -->
+
+    <owl:Class rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Tshirts">
+        <rdfs:subClassOf rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Shirts"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#WomensWear -->
+
+    <owl:Class rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#WomensWear">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>du lieu</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#BikerT -->
+
+    <owl:NamedIndividual rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#BikerT">
+        <rdf:type rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#MensWear"/>
+        <rdf:type rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Tshirts"/>
+        <rdfs:comment>Test</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#ChamoisHenley -->
+
+    <owl:NamedIndividual rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#ChamoisHenley">
+        <rdf:type rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Henleys"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#ClassicOxford -->
+
+    <owl:NamedIndividual rdf:about="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#ClassicOxford">
+        <rdf:type rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Oxfords"/>
+        <rdf:type rdf:resource="http://www.workingontologist.org/Examples/Chapter5/Shopping.owl#Shirts"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

@@ -1,0 +1,134 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fr.cril.pycowl</groupId>
+	<artifactId>fr.cril.pycowl</artifactId>
+	<version>1.0.1</version>
+	<packaging>jar</packaging>
+	<name>Pycowl (${project.groupId}:${project.artifactId})</name>
+	<description>An ontology library written in python</description>
+	<url>https://github.com/crillab/pycowl</url>
+
+	<scm>
+		<connection>scm:git:https://github.com/crillab/pycowl.git</connection>
+		<developerConnection>scm:git:https://github.com/crillab/pycowl.git</developerConnection>
+		<url>https://github.com/crillab/pycol</url>
+	  <tag>HEAD</tag>
+  </scm>
+
+	<organization>
+		<name>CRIL CNRS &amp; Univ. Artois</name>
+		<url>https://www.cril.univ-artois.fr/</url>
+	</organization>
+
+	<inceptionYear>2019</inceptionYear>
+
+	<developers>
+		<developer>
+			<id>delorme</id>
+			<name>Fabien Delorme</name>
+			<email>delorme@cril.fr</email>
+			<url>https://www.cril.univ-artois.fr/~delorme/</url>
+			<organization>CRIL CNRS &amp; Univ. Artois</organization>
+			<organizationUrl>https://www.cril.univ-artois.fr</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>11</java.version>
+		<junit.jupiter.version>5.4.2</junit.jupiter.version>
+	</properties>
+
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.owlapi/owlapi-distribution -->
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-distribution</artifactId>
+            <version>5.1.11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.owlapi/owlapi-api -->
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-api</artifactId>
+            <version>5.1.11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.owlapi/owlapi-apibinding -->
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-apibinding</artifactId>
+            <version>5.1.11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.owlapi/owlapi-impl -->
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-impl</artifactId>
+            <version>5.1.11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sf.py4j/py4j -->
+        <dependency>
+            <groupId>net.sf.py4j</groupId>
+            <artifactId>py4j</artifactId>
+            <version>0.10.8.1</version>
+        </dependency>
+
+
+		 <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
+    	</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<release>${java.version}</release>
+				</configuration>
+			</plugin>
+            <plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>owlapi-generator</id>
+						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+							<attach>false</attach>
+							<archive>
+								<manifest>
+									<mainClass>fr.cril.pycowl.Main</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<finalName>owlapi-generator-${project.version}</finalName>
+						</configuration>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+	</profiles>
+</project>
