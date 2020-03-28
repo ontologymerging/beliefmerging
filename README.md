@@ -13,7 +13,7 @@ Mapping:
 
 An interface of the application:
 
-<img src="https://github.com/ontologymerging/beliefmerging/blob/master/Images/Mapping.png" width="500"/>
+<img src="https://github.com/ontologymerging/beliefmerging/blob/master/Images/Application.png" width="500"/>
 
 ![Test Image 2](Images/Application.png)
 
