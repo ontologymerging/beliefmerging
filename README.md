@@ -21,6 +21,8 @@ Select the Concepts from three sources (SUMO, WIKIDATA, BABELNET)
 
 Some examples:
 
-![Test Image 3](Images/Example2.png)
 ![Test Image 4](Images/Example_Application.png)
+
+![Test Image 3](Images/Example2.png)
+
 
