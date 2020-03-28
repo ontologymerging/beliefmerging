@@ -1,8 +1,10 @@
-# beliefmerging
+# Belief Merging
 Belief Merging in Open-Domain Ontologies
 
 How to run the Ontology Merging application:
+```
 python3 ./Tools.py
+```
 
 Mapping:
 
