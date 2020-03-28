@@ -13,6 +13,8 @@ Mapping:
 
 An interface of the application:
 
+<img src="https://github.com/ontologymerging/beliefmerging/blob/master/Images/Mapping.png" width="500"/>
+
 ![Test Image 2](Images/Application.png)
 
 Select the Concepts from three sources (SUMO, WIKIDATA, BABELNET)
