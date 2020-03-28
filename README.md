@@ -11,11 +11,13 @@ Mapping:
 ![Test Image 1](Images/Mapping.png)
 
 
-
 An interface of the application:
 
 ![Test Image 2](Images/Application.png)
 
+Select the Concepts from three sources (SUMO, WIKIDATA, BABELNET)
+
+![Test Image 5](Images/SUMO_WIKIDATA_BABELNET.png)
 
 Some examples:
 
