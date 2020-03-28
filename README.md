@@ -13,7 +13,7 @@ Mapping:
 
 An interface of the application:
 
-![Test Image 2](Images/Application.png | width=100)
+![Test Image 2](Images/Application.png)
 
 Select the Concepts from three sources (SUMO, WIKIDATA, BABELNET)
 
