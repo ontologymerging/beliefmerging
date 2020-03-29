@@ -433,7 +433,7 @@ window.title('CRIL(Thanh): Subsumption and Equivalence')
 frame = tk.Frame(window,width=500)
 frame.pack()
 
-listbox = Listbox(window, bg="snow", height=100, width=55, selectmode='multiple')
+listbox = Listbox(window, bg="snow", height=100, width=55)
 listboxMapping = Listbox(window, bg="snow",height=100,  width=35)
 
 listboxSUMO = Listbox(window, bg="snow", height=100, width=30, selectmode='multiple')
@@ -452,35 +452,31 @@ for each  in SUMO:
 
 #------------------function Button-----------
 def print_me():
-	selection = listbox.curselection()
-
-	#SelectedData = listbox.get(clicked_items)
+	clicked_items = listbox.curselection()
+	SelectedData = listbox.get(clicked_items)
 	#print(SelectedData)
-	chooseList=[]
-	for each in selection:
-		dataList = listbox.get(each)
-		p = dataList.strip().split("->")	
-		chooseList.append(p[0])
-		chooseList.append(p[1])
-		chooseList = list( dict.fromkeys(chooseList))
-	
-	#pDataSUMO = SelectedData.strip().split("->")
+	pDataSUMO = SelectedData.strip().split("->")
 	
 	#--------Reset Listbox---------
 	listboxMapping.delete(0,tk.END)
 	listboxSUMO.delete(0,tk.END)
 	listboxWIKIDATA.delete(0,tk.END)
 	listboxBABELNET.delete(0,tk.END)
-	#----------------SUMO--------------------
-	FindSUMOMapping=[]
-	i=0
+	#--------Mapping---------
 	for each in MAPPING:
-		for eachChooseList in chooseList:
-			if each[0] == eachChooseList:
-				FindSUMOMapping.append(each[0])
-				listboxMapping.insert(i,each)
-				i+=1			
+		if each[0] == pDataSUMO[0]:
+			listboxMapping.insert(1,each)
+		if each[0] == pDataSUMO[1]:
+			listboxMapping.insert(1,each)
 
+	#----------------SUMO--------------------
+
+	FindSUMOMapping=[]
+	for each in MAPPING:
+		if each[0] == pDataSUMO[0]:
+			FindSUMOMapping.append(each[0])			
+		if each[0] == pDataSUMO[1]:
+			FindSUMOMapping.append(each[0])
 	FindSUMOMapping = list( dict.fromkeys(FindSUMOMapping))
 
 	i=1
@@ -707,6 +703,39 @@ def GetSameConcept():
 		i=i+1
 
 
+	'''
+	i=1
+	ListBABELNET1=[]
+	for each in FindBabelnetMapping:
+		for eachBABELNET in BABELNET:
+			if each ==	eachBABELNET[0] or each==eachBABELNET[1]:
+				name1=""
+				name2=""
+				Array_Name1=[]
+				Array_Name2=[]
+
+				for eachNameMapping in MAPPING:
+					if eachBABELNET[0] == eachNameMapping[1]:
+						name1 = eachNameMapping[0]
+						Array_Name1.append(name1)
+						#break
+				for eachNameMapping in MAPPING:
+					if eachBABELNET[1] == eachNameMapping[1]:
+						name2 = eachNameMapping[0]
+						Array_Name2.append(name2)
+						#break
+				for eachName1 in Array_Name1:
+					for eachName2 in Array_Name2:
+						if 	eachName1 in set(chooseList) and eachName2 in set(chooseList) and eachName1 != eachName2:				
+							ListBABELNET1.append("{0}->{1} ({2}->{3})".format(eachName1,eachName2,eachBABELNET[0],eachBABELNET[1]))
+	
+	ListBABELNET1 = list( dict.fromkeys(ListBABELNET1))
+	for each in ListBABELNET1:
+		listboxBABELNET.insert(i,"{0}".format(each))
+		i=i+1
+	'''
+
+
 def OntologyMerging():
 
 
@@ -819,10 +848,6 @@ def SUMOSelection():
 		dataList = listboxSUMO.get(each)
 		chooseListSUMO.append(dataList)
 		chooseListSUMO = list(dict.fromkeys(chooseListSUMO))
-	
-	if len(chooseListSUMO)<2:
-		chooseListSUMO.append(AddThingIntoConcept(chooseListSUMO[0]))
-
 	SUMO_Merging = chooseListSUMO
 	MergingChoose.insert(0,"SUMO:{0}".format(chooseListSUMO))
 
@@ -839,9 +864,6 @@ def WIKIDATASelection():
 		chooseListWIKIDATA.append(p[0])
 		chooseListWIKIDATA = list( dict.fromkeys(chooseListWIKIDATA))
 
-	if len(chooseListWIKIDATA)<2:
-		chooseListWIKIDATA.append(AddThingIntoConcept(chooseListWIKIDATA[0]))
-
 	WIKIDATA_Merging = chooseListWIKIDATA
 	MergingChoose.insert(1,"WIKIDATA:{0}".format(chooseListWIKIDATA))
 
@@ -857,9 +879,6 @@ def BABELNETSelection():
 		p = dataList.strip().split(" ")	
 		chooseListBABELNET.append(p[0])
 		chooseListBABELNET = list( dict.fromkeys(chooseListBABELNET))
-
-	if len(chooseListBABELNET)<2:
-		chooseListBABELNET.append(AddThingIntoConcept(chooseListBABELNET[0]))
 
 	BABELNET_Merging = chooseListBABELNET
 	MergingChoose.insert(2,"BABELNET:{0}".format(chooseListBABELNET))
@@ -878,68 +897,59 @@ def PrintListBox_Dist(ListOfInformation,listbox):
 	for each, value in ListOfInformation.items():
 		listbox.insert(i,"{0}:{1}".format(each,value))
 		i=i+1
-def AddThingIntoConcept(concept):
-	p = concept.strip().split ("->")
-	result = "{0}->Thing".format(p[1])
-	return result
 
-def List_SimpleConcept_FromAxioms(list_data):
-	Temp_SUMO=[]
-	for each in list_data:
-		p1 = each.strip().split ("->")
-		Temp_SUMO.append(p1[0])
-		Temp_SUMO.append(p1[1])
-		Temp_SUMO = list( dict.fromkeys(Temp_SUMO))
-	return Temp_SUMO
+def Test():
+	list_sub=['Book','Document','Text']
+	LISTRESULT_S=[]
+	for each in list_sub:
+		S = list(filter(lambda x: each in x[0], MAPPING)) 
+		LISTRESULT_S.extend(S)
+	messagebox.showinfo("Information","{0}".format(LISTRESULT_S))
 
-def Deduction_Concepts(data):
-	result=[]
-	for each1 in data:
-		p1 = each1.strip().split ("->")
-		for each2 in data:
-			p2 = each2.strip().split ("->")
-			if p1[0] == p2[1]:
-				result.append("{0}->{1}".format(p2[0],p1[1]))
-			if p2[0] == p1[1]:
-				result.append("{0}->{1}".format(p1[0],p2[1]))
-	result = list( dict.fromkeys(result))
-	result.extend(data)
-	return result
 
-def Collection_ThreeConcept_Normalization(data,data_common):
-	Data_Normalization=[]
-	for each1 in data:
-		p1 = each1.strip().split ("->")
-		if p1[0] in set(data_common) and p1[1] in set(data_common):
-			Data_Normalization.append("{0}".format(each1))
-	return Data_Normalization
+	list_sub=['Q2743','Q83790']
+	LISTRESULT_W=[]
+	for each in list_sub:
+		S = list(filter(lambda x: each in x[0], WIKIDATA)) 
+		LISTRESULT_W.extend(S)
 
-def  Normalization_SameConcept():
-	global  SUMO_Merging
-	global  WIKIDATA_Merging
-	global  BABELNET_Merging
-	SUMO_Data1 = SUMO_Merging  
-	WIKIDATA_Data1 = WIKIDATA_Merging 
-	BABELNET_Data1 = BABELNET_Merging 
+	timestart = time.time()
+	list_sub=['bn:00002370n','bn:03705036n']
+	LISTRESULT_B=[]
+	for each in list_sub:
+		for eachB in BABELNET:
+			if each == eachB[0] or  each == eachB[1]:
+				LISTRESULT_B.extend(eachB)
+	endstart = time.time()
+	print("Time 2:",endstart - timestart)
+	timestart = time.time()
+	list_sub=['bn:00002370n','bn:03705036n']
+	LISTRESULT_B=[]
+	for each in list_sub:
+		S = list(filter(lambda x: each in x[0], BABELNET))
+		LISTRESULT_B.extend(S)
+	endstart = time.time()
+	print("Time 1:",endstart - timestart)
 
-	SUMO_Data = List_SimpleConcept_FromAxioms(SUMO_Data1)		
-	WIKIDATA_Data = List_SimpleConcept_FromAxioms(WIKIDATA_Data1)		
-	BABELNET_Data = List_SimpleConcept_FromAxioms(BABELNET_Data1)
-	data_common = (set(SUMO_Data).intersection(set(WIKIDATA_Data))).intersection(set(BABELNET_Data))
 
-	if(len(SUMO_Data)>3):
-		data_Deduction_Concepts = Deduction_Concepts(SUMO_Data1)
-		SUMO_Merging = Collection_ThreeConcept_Normalization(data_Deduction_Concepts,data_common)
-		messagebox.showinfo("Information","SUMO's dataset is normalized as follows:\n{0}".format(SUMO_Merging))
-	if(len(WIKIDATA_Data)>3):
-		data_Deduction_Concepts = Deduction_Concepts(WIKIDATA_Data1)
-		WIKIDATA_Merging = Collection_ThreeConcept_Normalization(data_Deduction_Concepts,data_common)
-		messagebox.showinfo("Information","WIKIDATA's dataset is normalized as follows:\n{0}".format(WIKIDATA_Merging))
-	if(len(BABELNET_Data)>3):
-		data_Deduction_Concepts = Deduction_Concepts(BABELNET_Data1)
-		BABELNET_Merging = Collection_ThreeConcept_Normalization(data_Deduction_Concepts,data_common)
-		messagebox.showinfo("Information","BABELNET's dataset is normalized as follows:\n{0}".format(BABELNET_Merging))
-		
+
+	#messagebox.showinfo("Information","{0}".format(LISTRESULT_S))
+	#messagebox.showinfo("Information","{0}".format(LISTRESULT_W))
+	#messagebox.showinfo("Information","{0}".format(LISTRESULT_B))
+	'''
+	subs = 'Book'	
+	S = list(filter(lambda x: subs in x, SUMO)) 
+
+	subs = 'Q428'
+	W = list(filter(lambda x: subs in x, WIKIDATA)) 
+
+	subs = 'bn:00028018n'
+	B = list(filter(lambda x: subs in x, BABELNET)) 
+	#S = SUMO.index("Book")
+	#W = WIKIDATA.index("Q428") 
+	#B = BABELNET.index("bn:00028018n")
+	'''	
+	#messagebox.showinfo("Information","{0}".format(LISTRESULT))
 #--------------------MODEL -----------------------
 Relations = "->","<-","="
 #Relations = "&#8549;","&#8550","="
@@ -958,9 +968,8 @@ btn2 = Button(window, text="Get Same Concepts",command=GetSameConcept)
 m1.add(btn2)
 btnMerging = Button(window, text="Ontology Merging",command=OntologyMerging)
 m1.add(btnMerging)
-btnNormalization = Button(window, text="Normalization",command=Normalization_SameConcept)
-m1.add(btnNormalization)
-
+btnTest = Button(window, text="Test",command=Test)
+m1.add(btnTest)
 
 
 m2 = PanedWindow()
