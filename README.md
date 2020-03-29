@@ -22,15 +22,12 @@ Choose concepts to merge from three sources (SUMO, WIKIDATA, BABELNET)
 
 ## Some examples:
 
-```
+
 ### Example: Seafood, Shellfish, Shrimp
-```
 
 ![Test Image 4](Images/Example_Application.png)
 
-```
 ### Example: Stone, Rock, Gravel
-```
 
 ![Test Image 3](Images/Example2.png)
 
