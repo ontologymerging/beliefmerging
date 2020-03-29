@@ -26,4 +26,14 @@ Choose concepts to merge from three sources (SUMO, WIKIDATA, BABELNET)
 
 ![Test Image 3](Images/Example2.png)
 
+![Test Image 6](Images/Example_Book1.png)
+
+![Test Image 7](Images/Example_Book2.png)
+
+![Test Image 8](Images/Example_Method.png)
+
+![Test Image 9](Images/Example_Process.png)
+
+
+
 
