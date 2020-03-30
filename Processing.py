@@ -366,6 +366,109 @@ def FindClosureConcept(ConceptsStructure,InputAtomicConcepts):
         Temp.append(FinalResultInterpretation)
     return Temp
 
+
+def Statistics_Interpretation(ConceptsStructure, Array_All_Interpretation,InputAtomicConcepts):
+	#number=[1,1,4]
+	#doi ten
+	#Dung dinh dang
+	number=[1,2,3]
+	id=0
+	Sum_ThreeOntology=[]
+	Sum_Interpretation=[]
+
+	for i in ConceptsStructure:
+		id=id+1
+		for h in range(len(number)):
+			tang=0
+			if (id == number[h]):
+				print("->", i)
+				for j in Array_All_Interpretation:
+					tang = tang + 1
+					countTrue = 0
+					countFalse = 0
+					if(CheckCorrectionOfInterpretation_EachConcept(i[0],j,InputAtomicConcepts)):
+						countTrue=countTrue+1
+					else:
+						countFalse = countFalse +1
+					if(CheckCorrectionOfInterpretation_EachConcept(i[1],j,InputAtomicConcepts)):
+						countTrue=countTrue+1
+					else:
+						countFalse = countFalse +1
+
+					#print("%s. %s -- %s"%(tang,countTrue, countFalse))
+					Sum_Interpretation.append(countFalse)
+
+				Sum_ThreeOntology.append(Sum_Interpretation)
+				Sum_Interpretation=[]
+
+	List_Sum_ThreeOntologies=[]
+	List_Max_ThreeOntologies=[]
+	List_GMax_ThreeOntologies=[]
+	for i in range(len(Sum_ThreeOntology[0])):
+		SumAll = Sum_ThreeOntology[0][i]+ Sum_ThreeOntology[1][i]+ Sum_ThreeOntology[2][i]
+		MaxAll = max(Sum_ThreeOntology[0][i], Sum_ThreeOntology[1][i], Sum_ThreeOntology[2][i])
+		GMaxAll=[Sum_ThreeOntology[0][i], Sum_ThreeOntology[1][i], Sum_ThreeOntology[2][i]]
+		GMaxAll.sort(reverse=True)
+		List_Max_ThreeOntologies.append(MaxAll)
+		List_Sum_ThreeOntologies.append(SumAll)
+		List_GMax_ThreeOntologies.append(GMaxAll)
+
+	Sum_ThreeOntology.append(List_Sum_ThreeOntologies)  #3
+	Sum_ThreeOntology.append(List_Max_ThreeOntologies)  #4
+	Sum_ThreeOntology.append(List_GMax_ThreeOntologies) #5
+	Sum_ThreeOntology.append(Array_All_Interpretation)  #6
+
+	#Vertical to horizontal in array
+	Rotate_Array = [[Sum_ThreeOntology[j][i] for j in range(len(Sum_ThreeOntology))] for i in range(len(Sum_ThreeOntology[0]))]
+	Rotate_Array.sort(key=lambda Rotate_Array: Rotate_Array[3])#,reverse=True)
+	#Number_Sorted_Array=[]
+	#Number_Sorted_Array.sort()
+	return Rotate_Array
+
+
+def GetTopModel(ArrayResult):
+	ListInterpretation=[]
+	for each in ArrayResult:
+		Result_SUM = each[3]
+		Result_MAX = each[4]
+		Result_GMAX = each[5]
+		Interpretation = each[6] #4
+		if Result_SUM==0 and Result_MAX==0 and Result_GMAX==[0,0,0]:
+			ListInterpretation.append(Interpretation)
+	return ListInterpretation
+
+def Frequency(List):
+	l = List
+	l = list( dict.fromkeys(l))
+	ListFrequency={}
+	for each in l:
+		ListFrequency[each] = []
+		ListFrequency[each].append(List.count(each))
+	return ListFrequency
+
+def SIFAlgorithm(ArrayResult, Concept):
+	SIFT={}
+	ListInterpretation={}
+	i=0
+	for C in Concept:
+		ListInterpretation[C]=[]
+		for each in ArrayResult:
+			ListInterpretation[C].extend(each[i])
+		i=i+1
+	#print(ListInterpretation)
+	for nameConcept, valueList in ListInterpretation.items():
+		SIFT[nameConcept]=[]
+		fre = Frequency(valueList)
+		t = len(ArrayResult)/2
+		#print("Concept:{0}".format(C))
+		#print("Interpretation:{0}".format(fre))
+		for i,v in fre.items():
+			#print("{0}>{1},{2}={3}".format(v[0],t, v[0], len(ArrayResult)))
+			if v[0]>t and v[0]==len(ArrayResult):
+				SIFT[nameConcept].append(i)
+	print(SIFT)		
+	return SIFT
+
 def write_Considering_03_Ontology(ConceptsStructure, value1, value2, value3):
     Temp = "%d %d %d"%(int(value1),int(value2),int(value3))
     count = 0
@@ -560,45 +663,18 @@ def CheckCorrectionOfInterpretation_EachFormular(Concept1, Concept2, Interpretat
 
 
 def CheckCorrectionOfInterpretation_EachConcept(Concept1, Interpretations,primaryConcept):
-    '''
-    resultChecking_Concept1= False
-    #-----------------------Concept 1--------------------------------
-    positionRight_1 = PositionOfString(RightSide(Concept1), primaryConcept) - 1
-    positionLeft_1 = PositionOfString(LeftSide(Concept1), primaryConcept) - 1
-    # Considering Concept1
-    if  RelationOfConcepts(Concept1)=="=":
-        #Considering Interpretation regarding  Concept1
-        if len(Interpretations[positionLeft_1]) == len(Interpretations[positionRight_1]): #Test each element of Left and Right Concept
-            if all([Interpretations[positionLeft_1][i] == Interpretations[positionRight_1][i] for i in range(len(Interpretations[positionRight_1]))])==True:
-                resultChecking_Concept1= True
-        #print("Concept1 - Role =:", resultChecking_Concept1)
 
-    if RelationOfConcepts(Concept1) == "->":
-        # Considering Interpretation regarding  Concept1
-        if all([Interpretations[positionLeft_1][i] in Interpretations[positionRight_1] for i in range(len(Interpretations[positionLeft_1]))])==True and Interpretations[positionLeft_1].count(Initiation()[positionRight_1][0])==0:
-            resultChecking_Concept1 = True
-        #print("Concept1 - Role ->:", resultChecking_Concept1)
-
-
-    if RelationOfConcepts(Concept1) == "<-":
-        # Considering Interpretation regarding  Concept1
-        if all([Interpretations[positionRight_1][i] in Interpretations[positionLeft_1] for i in range(len(Interpretations[positionRight_1]))])==True and Interpretations[positionRight_1].count(Initiation()[positionLeft_1][0])==0:
-            resultChecking_Concept1 = True
-        #print("Concept1 - Role <-:", resultChecking_Concept1)
-    return resultChecking_Concept1;
-    '''
     resultChecking_Concept1 = False
     # -----------------------Concept 1--------------------------------
     positionRight_1 = PositionOfString(RightSide(Concept1), primaryConcept) - 1
     positionLeft_1 = PositionOfString(LeftSide(Concept1), primaryConcept) - 1
-
-    if RelationOfConcepts(Concept1) == "<-":
-        if all([Interpretations[positionRight_1][i] in Interpretations[positionLeft_1] for i in range(len(Interpretations[positionRight_1]))]) == True \
-                and Initiation()[positionLeft_1][0] not in Interpretations[positionRight_1]: #b in bottom
-            resultChecking_Concept1 = True
+    LeftSet = set(Interpretations[positionLeft_1])
+    RightSet = set(Interpretations[positionRight_1])
     if RelationOfConcepts(Concept1) == "->":
-        if all([Interpretations[positionLeft_1][i] in Interpretations[positionRight_1] for i in range(len(Interpretations[positionLeft_1]))]) == True \
-                and Initiation()[positionRight_1][0] not in Interpretations[positionLeft_1]: #b in bottom
+        if LeftSet.issubset(RightSet):
+            resultChecking_Concept1 = True
+    if RelationOfConcepts(Concept1) == "<-":
+        if RightSet.issubset(LeftSet):
             resultChecking_Concept1 = True
     if RelationOfConcepts(Concept1) == "=":
         if all([Interpretations[positionLeft_1][i] in Interpretations[positionRight_1] for i in range(len(Interpretations[positionLeft_1]))]) == True \
@@ -606,7 +682,6 @@ def CheckCorrectionOfInterpretation_EachConcept(Concept1, Interpretations,primar
             resultChecking_Concept1 = True
 
     return resultChecking_Concept1
-
 #----------------------------------------------------------
 #----------------------BUTTON-----------------------
 
