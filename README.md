@@ -1,5 +1,6 @@
 # Belief Merging
 ## Belief Merging in Open-Domain Ontologies
+Our ontology merging application tool focuses on handling the conflicts in which the open-domain sources consider the same concept but expressing the knowledge differently. The input of the tool is open-domain ontologies and the output is a merged result between the sources. We implemented the tool in three sources including: SUMO, Wikidata and Babelnet. Namely, we first collected a mapping between three sources to perform a common name synchronizing process. Finally, we utilized the fundamental theory of belief merging to apply ontology merging. We also identified the most plausible interpretation corresponding a merged syntactic as the ontology merging result of our tool.
 
 How to run the Ontology Merging application:
 ```
