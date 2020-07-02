@@ -40,10 +40,6 @@ Choose concepts to merge from three sources (SUMO, WIKIDATA, BABELNET)
 
 ![Test Image 7](Images/Example_Book2.png)
 
-### Example: Process, Technique, Procedure
-
-![Test Image 8](Images/Example_Method.png)
-
 ### Example: Region, LandForm, Valley
 
 ![Test Image 10](Images/Example_Region.png)
