@@ -44,8 +44,6 @@ Choose concepts to merge from three sources (SUMO, WIKIDATA, BABELNET)
 
 ![Test Image 8](Images/Example_Method.png)
 
-![Test Image 9](Images/Example_Process.png)
-
 ### Example: Region, LandForm, Valley
 
 ![Test Image 10](Images/Example_Region.png)
